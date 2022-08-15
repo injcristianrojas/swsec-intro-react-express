@@ -28,11 +28,26 @@ Actually, there are two separated apps. The Client which serves the FrontEnd (us
 
 # Security
 
-## ESLint
+## SAST
+
+### ESLint
 npm install eslint eslint-plugin-security eslint-plugin-react --save-dev
 npm init @eslint/config
 npx eslint .
 
-## Semgrep
+### Semgrep
+
+python3 -m pip install --user semgrep
 semgrep --config "p/react"
 semgrep --config "p/expressjs"
+
+## SCA
+
+### NPM Audit
+
+npm audit
+
+### Trivy
+
+(Install from repo. Not available for Windows)
+trivy fs .
