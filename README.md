@@ -25,3 +25,14 @@ Actually, there are two separated apps. The Client which serves the FrontEnd (us
 2. If you see a webpage saying `Welcome to React`, it means the FrontEnd is working.
 3. If the same webpage has the phrase `API is working properly`, it means the API is working.
 4. Enjoy!
+
+# Security
+
+## ESLint
+npm install eslint eslint-plugin-security eslint-plugin-react --save-dev
+npm init @eslint/config
+npx eslint .
+
+## Semgrep
+semgrep --config "p/react"
+semgrep --config "p/expressjs"
