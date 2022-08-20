@@ -26,10 +26,18 @@ npm start
 
 ### ESLint
 
+SPA:
+
 ```shell
 npm install eslint@5.16.0 eslint-plugin-security eslint-plugin-react --save-dev
 npm init @eslint/config
 npx eslint .
+```
+
+API:
+
+```shell
+TODO something like eslint-plugin-react but for Express
 ```
 
 ### Semgrep
