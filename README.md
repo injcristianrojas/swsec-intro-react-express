@@ -31,7 +31,7 @@ Actually, there are two separated apps. The Client which serves the FrontEnd (us
 ## SAST
 
 ### ESLint
-npm install eslint eslint-plugin-security eslint-plugin-react --save-dev
+npm install eslint@5.16.0 eslint-plugin-security eslint-plugin-react --save-dev
 npm init @eslint/config
 npx eslint .
 
