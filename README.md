@@ -51,3 +51,8 @@ npm audit
 
 (Install from repo. Not available for Windows)
 trivy fs .
+
+## Secrets detection
+
+TODO add secrets
+
