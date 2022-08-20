@@ -6,7 +6,7 @@ app.get("/testAPI", function(req, res) {
 });
 
 app.get("/", function(req, res) {
-  res.send("Index. Nothing to see here.");
+  res.json({"message":"Index. Nothing to see here."})
 });
 
 app.listen(9000, () => {
