@@ -1,56 +1,60 @@
-# React_Express_App_Medium_Tutorial
-- This repository has the code to support a tutorial that I created on Medium called Create a React FrontEnd, a Node/Express BackEnd and connect them together.
-- This repository can also be used as a starting point (boilerplate), if you whant to create your own React/Express app.
-.
+# React-Express Software Security
 
-## Where can I check the tutorial?
-You are very welcome to check the tutorial on Medium. Just follow the link below.
-- [Create a React FrontEnd, a Node/Express BackEnd and connect them together](https://medium.com/@jrshenrique/create-a-react-frontend-a-node-express-backend-and-connect-them-together-c5798926047c)
+Based on https://github.com/Joao-Henrique/React_Express_App_Medium_Tutorial
 
-## About the app
-Actually, there are two separated apps. The Client which serves the FrontEnd (using React), and the API (in Node/Express).
+# Launch
 
-## How to run the API
-1. In your terminal, navigate to the `api` directory.
-2. Run `npm install` to install all dependencies.
-3. Run `npm start` to start the app.
+## Launch API
 
-## How to run the Client
-1. In another terminal, navigate to the `client` directory.
-2. Run `npm install` to install all dependencies.
-3. Run `npm start` to start the app
+```shell
+cd api
+npm install
+npm start
+```
 
-## Check if they are connected
-1. With the two apps running, open your browser in http://localhost:3000/.
-2. If you see a webpage saying `Welcome to React`, it means the FrontEnd is working.
-3. If the same webpage has the phrase `API is working properly`, it means the API is working.
-4. Enjoy!
+## Launch SPA (client)
+
+```shell
+cd spa
+npm install
+npm start
+```
 
 # Security
 
 ## SAST
 
 ### ESLint
+
+```shell
 npm install eslint@5.16.0 eslint-plugin-security eslint-plugin-react --save-dev
 npm init @eslint/config
 npx eslint .
+```
 
 ### Semgrep
 
+```shell
 python3 -m pip install --user semgrep
 semgrep --config "p/react"
 semgrep --config "p/expressjs"
+```
 
 ## SCA
 
 ### NPM Audit
 
+```shell
 npm audit
+```
 
 ### Trivy
 
 (Install from repo. Not available for Windows)
+
+```shell
 trivy fs .
+```
 
 ## Secrets detection
 
