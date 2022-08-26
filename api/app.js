@@ -28,3 +28,5 @@ app.get("/api/users", (req, res) => {
 app.listen(9000, () => {
   console.log("API server running on port 9000");
 });
+
+module.exports = app
