@@ -72,3 +72,6 @@ trivy fs .
 
 TODO add secrets
 
+# Notes
+
+* Express Security: https://expressjs.com/en/advanced/best-practice-security.html
