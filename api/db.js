@@ -2,20 +2,6 @@ const sqlite3 = require('sqlite3').verbose()
 
 const DBSOURCE = "db.sqlite"
 
-/* 
-,
-,
-,
-`CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY NOT NULL, username VARCHAR(10) NOT NULL, password VARCHAR(30) NOT NULL, user_type INTEGER NOT NULL);`
-`INSERT INTO users(username,password,user_type) VALUES ('admin', '123', 1);`
-`INSERT INTO users(username,password,user_type) VALUES ('zorzal', 'fio', 2);`
-`INSERT INTO users(username,password,user_type) VALUES ('chincol', 'fiofio', 2);`
-*/
-
-
-
-
-
 let db = new sqlite3.Database(DBSOURCE, (err) => {
   if (err) {
     // Cannot open database
