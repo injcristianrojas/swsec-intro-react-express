@@ -34,12 +34,12 @@ app.post("/api/login", (req, res) => {
   const sql = "select * from users where username = '" + username + "' and password = '" + password + "'";
   const params = [];
   db.all(sql, params, (err, rows) => {
-    if (err) {
-      res.status(400).json({ "error": err.message });
-      return;
-    }
     if (rows.length < 1) {
       res.status(401).json({ "error": "unauthorized" });
+      return;
+    }
+    if (err) {
+      res.status(400).json({ "error": err.message });
       return;
     }
     res.send("" + rows.length);
