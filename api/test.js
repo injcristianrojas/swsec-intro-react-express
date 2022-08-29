@@ -16,7 +16,7 @@ describe("Tests", function () {
       });
   });
 
-/*   it("Legit login should work", function (done) {
+  it("Legit login should work", function (done) {
     supertest(app)
       .post("/api/login")
       .type("form")
@@ -24,11 +24,11 @@ describe("Tests", function () {
         "username": "admin",
         "password": "123"
       })
-      .expect(200)
       .end(function (err, res) {
-        if (err) done(err);
-        done();
+        expect(err).to.be.null;
+        expect(res.statusCode).to.equal(200);
+        done()
       });
-  }); */
+  });
 
 });
