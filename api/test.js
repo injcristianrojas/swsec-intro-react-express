@@ -1,23 +1,23 @@
-const { expect } = require('chai');
 const chai = require('chai');
-const supertest = require('supertest');
-
+const chaiHttp = require('chai-http');
 const app = require('./app');
+let should = chai.should();
+
+chai.use(chaiHttp);
 
 describe("Tests", function () {
 
   it("GET / should have status code 200", function (done) {
-    supertest(app)
+    chai.request(app)
       .get("/")
       .end(function (err, res) {
-        expect(err).to.be.null;
-        expect(res.statusCode).to.equal(200);
+        res.should.have.status(200)
         done()
       });
   });
 
   it("Legit login should work", function (done) {
-    supertest(app)
+    chai.request(app)
       .post("/api/login")
       .type("form")
       .send({
@@ -25,8 +25,7 @@ describe("Tests", function () {
         "password": "123"
       })
       .end(function (err, res) {
-        expect(err).to.be.null;
-        expect(res.statusCode).to.equal(200);
+        res.should.have.status(200)
         done()
       });
   });
