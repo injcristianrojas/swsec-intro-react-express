@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const db = require("./db.js");
 
-app.use(express.urlencoded());
+app.use(express.json());
 
 app.get("/testAPI", function (req, res) {
   res.send("API is working properly")
@@ -30,16 +30,15 @@ app.get("/api/users", (req, res) => {
 app.post("/api/login", (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
-
+  
   const sql = "select * from users where username = '" + username + "' and password = '" + password + "'";
-  const params = [];
-  db.all(sql, params, (err, rows) => {
-    if (rows.length < 1) {
-      res.status(401).json({ "error": "unauthorized" });
-      return;
-    }
+  db.all(sql, [], (err, rows) => {
     if (err) {
       res.status(400).json({ "error": err.message });
+      return;
+    }
+    if (rows.length < 1) {
+      res.status(401).json({ "error": "unauthorized" });
       return;
     }
     res.send("" + rows.length);

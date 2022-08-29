@@ -5,7 +5,7 @@ let should = chai.should();
 
 chai.use(chaiHttp);
 
-describe("Tests", async function () {
+describe("Basic tests", function () {
 
   it("GET / should have status code 200", function (done) {
     chai.request(app)
@@ -16,14 +16,10 @@ describe("Tests", async function () {
       });
   });
 
-  it("Legit login should work", async function (done) {
+  it("Legit login should work", function (done) {
     chai.request(app)
       .post("/api/login")
-      .type("form")
-      .send({
-        "username": "admin",
-        "password": "123"
-      })
+      .send({ username: "admin", password: "123" })
       .end(function (err, res) {
         res.should.have.status(200)
         done()
