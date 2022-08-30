@@ -37,7 +37,7 @@ app.post("/api/login", (req, res) => {
   if (results.length < 1) {
     res.status(401).json({ "error": "unauthorized" });
   } else {
-    res.send("" + results.length);
+    res.send("" + results[0].username);
   }
 });
 
