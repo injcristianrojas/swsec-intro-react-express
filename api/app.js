@@ -14,17 +14,15 @@ app.get("/", function (req, res) {
 
 app.get("/api/users", (req, res) => {
   const sql = "select * from users"
-  const params = []
-  db.all(sql, params, (err, rows) => {
-    if (err) {
-      res.status(400).json({ "error": err.message });
-      return;
-    }
-    res.json({
-      "message": "success",
-      "data": rows
-    })
+
+  let query = db.prepare(sql);
+  let results = query.all();
+
+  res.json({
+    "message": "success",
+    "data": results
   });
+
 });
 
 app.post("/api/login", (req, res) => {
@@ -32,18 +30,15 @@ app.post("/api/login", (req, res) => {
   const password = req.body.password;
   
   const sql = "select * from users where username = '" + username + "' and password = '" + password + "'";
-  db.all(sql, [], (err, rows) => {
-    if (err) {
-      res.status(400).json({ "error": err.message });
-      return;
-    }
-    if (rows.length < 1) {
-      res.status(401).json({ "error": "unauthorized" });
-      return;
-    }
-    res.send("" + rows.length);
-  });
 
+  let query = db.prepare(sql);
+  let results = query.all();
+
+  if (results.length < 1) {
+    res.status(401).json({ "error": "unauthorized" });
+  } else {
+    res.send("" + results.length);
+  }
 });
 
 app.listen(9000, () => {
