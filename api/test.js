@@ -63,4 +63,15 @@ describe("Authenticated tests", function () {
       });
   });
 
+  it("GET /api/messages: Show all messages", function (done) {
+    chai.request(app)
+      .get("/api/messages")
+      .set({ Authorization: `Bearer ${accessToken}` })
+      .end(function (err, res) {
+        res.should.have.status(200)
+        res.body.data[0].should.have.property("message").to.include("Administrador");
+        done()
+      });
+  });
+
 });

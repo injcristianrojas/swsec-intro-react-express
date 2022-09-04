@@ -65,7 +65,22 @@ app.get("/api/users", (req, res) => {
 
 // Posts
 
+app.get("/api/messages", (req, res) => {
+  if (!isTokenValid(req)) {
+    res.status(401).json({ "error": "unauthorized" });
+    return;
+  }
 
+  const sql = "select * from messages";
+  let query = db.prepare(sql);
+  let results = query.all();
+
+  res.json({
+    "message": "success",
+    "data": results
+  });
+
+});
 
 app.listen(9000, () => {
   console.log("API server running on port 9000");
