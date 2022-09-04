@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
 import MenuLogged from './MenuLogged';
+import Welcome from './Welcome';
 
 class Login extends React.Component {
 
@@ -31,9 +32,10 @@ class Login extends React.Component {
       }
     ).then(
       res => {
-        alert('Successfully logged in.');
+        //alert('Successfully logged in.');
         localStorage.setItem('jwttoken', res.data.token);
         ReactDOM.render(<MenuLogged />, document.getElementById('menu'));
+        ReactDOM.render(<Welcome />, document.getElementById('root'));
       }
     ).catch((error) => {
       if (error.response) {
