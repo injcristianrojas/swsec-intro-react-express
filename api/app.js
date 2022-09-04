@@ -30,14 +30,12 @@ app.get("/", function (req, res) {
 });
 
 app.get("/api/users", (req, res) => {
-
   if (!isTokenValid(req)) {
     res.status(401).json({ "error": "unauthorized" });
     return;
   }
 
   const sql = "select * from users";
-
   let query = db.prepare(sql);
   let results = query.all();
 
@@ -53,7 +51,6 @@ app.post("/api/login", (req, res) => {
   const password = req.body.password;
 
   const sql = "select * from users where username = '" + username + "' and password = '" + password + "'";
-
   let query = db.prepare(sql);
   let results = query.all();
 
