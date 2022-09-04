@@ -23,7 +23,7 @@ class Login extends React.Component {
 
     handleSubmit(event) {
         axios.post(
-            'http://127.0.0.1:8080/api/auth/login/', 
+            'http://127.0.0.1:9000/api/login/', 
             {
                 username: this.state.username,
                 password: this.state.password,
@@ -31,7 +31,7 @@ class Login extends React.Component {
         ).then(
             res => {
                 alert('Successfully logged in.')
-                sessionStorage.setItem('jwttoken', res.headers['authorization']);
+                localStorage.setItem('jwttoken', res.headers['authorization']);
             }
         ).catch((error) => {
             if (error.response) {
