@@ -53,9 +53,9 @@ describe("Basic tests", function () {
 
 describe("Authenticated tests", function () {
 
-  it("GET /api/users: Show all users", function (done) {
+  it("GET /api/users: Show type 2 users", function (done) {
     chai.request(app)
-      .get("/api/users")
+      .get("/api/users/type/2")
       .set({ Authorization: `Bearer ${accessToken}` })
       .end(function (err, res) {
         res.should.have.status(200)

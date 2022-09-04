@@ -46,13 +46,13 @@ app.post("/api/login", (req, res) => {
 
 // Users
 
-app.get("/api/users", (req, res) => {
+app.get("/api/users/type/:type", (req, res) => {
   if (!isTokenValid(req)) {
     res.status(401).json({ "error": "unauthorized" });
     return;
   }
 
-  const sql = "select * from users";
+  const sql = "select * from users where user_type = " + req.params.type;
   let query = db.prepare(sql);
   let results = query.all();
 
