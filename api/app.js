@@ -43,7 +43,7 @@ app.post("/api/login", (req, res) => {
   if (results.length < 1) {
     res.status(401).json({ "error": "unauthorized" });
   } else {
-    res.json(jwt.sign({username: results[0].username}, JWTSECRET, { expiresIn: JWTEXPIRATION }));
+    res.json({'token': jwt.sign({username: results[0].username}, JWTSECRET, { expiresIn: JWTEXPIRATION })});
   }
 });
 
