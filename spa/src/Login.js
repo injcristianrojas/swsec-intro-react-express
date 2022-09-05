@@ -60,6 +60,10 @@ class Login extends React.Component {
               <td>Password: </td>
               <td><input type="password" name="password" value={this.state.password} onChange={this.handleChange} /></td>
             </tr>
+            <tr>
+              <td>&nbsp;</td>
+              <td><input type="submit" name="submit" value="Ingresar" /></td>
+            </tr>
           </tbody>
         </table>
       </form>

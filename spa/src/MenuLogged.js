@@ -10,13 +10,14 @@ class MenuLogged extends React.Component {
       <ul>
         <li><a title="Home" id="home" href="# " onClick={this.Home}>Home</a></li><li>|</li>
         <li><a title="Muro" id="wall" href="# ">Muro</a></li><li>|</li>
+        <li><a title="Usuarios" id="users" href="# " onClick={this.Users}>Usuarios</a></li><li>|</li>
         <li><a title="Salir" id="exit" href="# " onClick={this.Exit}>Salir</a></li>
       </ul>
     )
   }
 
   Home() {
-    ReactDOM.render(<Menu />, document.getElementById('menu'));
+    ReactDOM.render(<MenuLogged />, document.getElementById('menu'));
     ReactDOM.render(<Login />, document.getElementById('root'));
   }
  
@@ -24,6 +25,10 @@ class MenuLogged extends React.Component {
     localStorage.removeItem('jwttoken');
     ReactDOM.render(<Menu />, document.getElementById('menu'));
     ReactDOM.render(<Login />, document.getElementById('root'));
+  }
+
+  Users() {
+    //ReactDOM.render(<Users />, document.getElementById('root'));
   }
 
 }
