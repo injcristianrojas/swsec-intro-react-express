@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Menu from './Menu';
 import Login from './Login';
+import Users from './Users';
 
 class MenuLogged extends React.Component {
 
@@ -28,7 +29,7 @@ class MenuLogged extends React.Component {
   }
 
   Users() {
-    //ReactDOM.render(<Users />, document.getElementById('root'));
+    ReactDOM.render(<Users />, document.getElementById('root'));
   }
 
 }
