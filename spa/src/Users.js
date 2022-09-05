@@ -44,17 +44,20 @@ class Users extends React.Component {
       return <div>Loading...</div>;
     } else {
       return (
-        <div>
-          <p>Lista de usuarios</p>
-          <ul>
-            {users.map(user => (
-              <li key={user.id}>
+        <table>
+          <th id="msgs">Usuarios</th>
+          {users.map(user => (
+            <tr>
+              <td key={user.id}>
                 {user.username}
-              </li>
-            ))}
-          </ul>
-        </div>
-      );
+              </td>
+            </tr>
+          ))}
+          <tr>
+            <td></td>
+          </tr>
+        </table>
+      )
     }
   }
 
