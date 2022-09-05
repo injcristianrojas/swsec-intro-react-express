@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import Menu from './Menu';
 import Login from './Login';
 import Users from './Users';
+import Wall from './Wall';
 
 class MenuLogged extends React.Component {
 
@@ -10,8 +11,8 @@ class MenuLogged extends React.Component {
     return (
       <ul>
         <li><a title="Home" id="home" href="# " onClick={this.Home}>Home</a></li><li>|</li>
-        <li><a title="Muro" id="wall" href="# ">Muro</a></li><li>|</li>
         <li><a title="Usuarios" id="users" href="# " onClick={this.Users}>Usuarios</a></li><li>|</li>
+        <li><a title="Muro" id="wall" href="# " onClick={this.Wall}>Muro</a></li><li>|</li>
         <li><a title="Salir" id="exit" href="# " onClick={this.Exit}>Salir</a></li>
       </ul>
     )
@@ -30,6 +31,10 @@ class MenuLogged extends React.Component {
 
   Users() {
     ReactDOM.render(<Users />, document.getElementById('root'));
+  }
+
+  Wall() {
+    ReactDOM.render(<Wall />, document.getElementById('root'));
   }
 
 }
