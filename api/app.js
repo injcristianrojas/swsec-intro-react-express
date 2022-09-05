@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const cors = require('cors');
 const db = require('./db.js');
 
-const JWTSECRET = "c700939e170c4854a02dd864e12355c295486bb5f0169063c2d8ab9cb612b1909dff0870596c2523f1c0a63e4683a96281b5db449035a7eb8ea9e166d2214443";
+const JWTSECRET = "123";
 const JWTEXPIRATION = "1800s";
 
 const app = express();
