@@ -187,3 +187,7 @@ a:hover
 	font-size: 11px;
 	line-height: 36px;
 }
+
+th, td {
+  text-align: left;
+}
