@@ -53,9 +53,6 @@ class Users extends React.Component {
               </td>
             </tr>
           ))}
-          <tr>
-            <td></td>
-          </tr>
         </table>
       )
     }
