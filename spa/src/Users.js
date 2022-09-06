@@ -45,14 +45,20 @@ class Users extends React.Component {
     } else {
       return (
         <table>
-          <th>Usuarios</th>
-          {users.map(user => (
+          <thead>
             <tr>
-              <td key={user.id}>
-                {user.username}
-              </td>
+              <th>Usuarios</th>
             </tr>
-          ))}
+          </thead>
+          <tbody>
+            {users.map(user => (
+              <tr key={user.id}>
+                <td>
+                  {user.username}
+                </td>
+              </tr>
+            ))}
+          </tbody>
         </table>
       )
     }
