@@ -8,7 +8,10 @@ const JWTEXPIRATION = "1800s";
 
 const app = express();
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+  origin: '*',
+  methods: '*'
+}));
 
 function isTokenValid(req) {
   if (req.headers && req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') {
