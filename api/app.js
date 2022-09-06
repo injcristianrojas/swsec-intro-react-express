@@ -94,8 +94,13 @@ app.post("/api/messages/new", (req, res) => {
     return;
   }
 
+  const sql = "select * from messages";
+  let query = db.prepare(sql);
+  let results = query.all();
+
   res.json({
-    "message": "success"
+    "message": "success",
+    "data": results
   });
 
 })

@@ -1,5 +1,6 @@
 // Source: https://reactjs.org/docs/faq-ajax.html
 import React from 'react';
+import axios from 'axios';
 
 class Wall extends React.Component {
 
@@ -7,10 +8,43 @@ class Wall extends React.Component {
     super(props);
     this.state = {
       error: null,
-      isLoaded: false,
-      messages: []
+      messages: [],
+      message: ''
     };
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
+
+  handleChange(event) {
+    this.setState({ message: event.target.value });
+  }
+
+  handleSubmit(event) {
+    let token = localStorage.getItem('jwttoken');
+    axios.post(
+      'http://127.0.0.1:9000/api/messages/new',
+      {
+        'message': this.state.message
+      },
+      {
+        headers: { "Authorization": `Bearer ${token}` }
+      }
+    ).then(
+      res => {
+        this.setState(
+          { messages: res.data.data, message: '' },
+          () => console.log(this.state)
+        );
+      }
+    ).catch((error) => {
+      if (error.response) {
+        console.log(error.response.data);
+        console.log(error.response.status);
+      }
+    });
+    event.preventDefault();
+  }
+
 
   componentDidMount() {
     let token = localStorage.getItem('jwttoken');
@@ -19,7 +53,6 @@ class Wall extends React.Component {
       .then(
         (result) => {
           this.setState({
-            isLoaded: true,
             messages: result.data
           });
         },
@@ -28,32 +61,38 @@ class Wall extends React.Component {
         // exceptions from actual bugs in components.
         (error) => {
           this.setState({
-            isLoaded: true,
             error
           });
         }
       )
-
   }
 
   render() {
-    const { error, isLoaded, messages } = this.state;
+    const { error, messages } = this.state;
     if (error) {
       return <div>Error: {error.message}</div>;
-    } else if (!isLoaded) {
-      return <div>Loading...</div>;
     } else {
       return (
         <div>
+          <form onSubmit={this.handleSubmit}>
+            <input type="text" value={this.state.message} onChange={this.handleChange} />
+            <input type="submit" value="Postear" />
+          </form>
           <table>
-            <th>Mensajes</th>
-            {messages.map(message => (
+            <thead>
               <tr>
-                <td key={message.id}>
-                  {message.message}
-                </td>
+                <th>Mensajes</th>
               </tr>
-            ))}
+            </thead>
+            <tbody>
+              {messages.map(message => (
+                <tr key={message.id}>
+                  <td>
+                    {message.message}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
           </table>
         </div>
       )
