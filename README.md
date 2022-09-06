@@ -4,7 +4,7 @@ Based on https://github.com/Joao-Henrique/React_Express_App_Medium_Tutorial
 
 # Launch
 
-## Launch API
+## Launch API (Express)
 
 ```shell
 cd api
@@ -12,7 +12,7 @@ npm install
 npm start
 ```
 
-## Launch SPA (client)
+## Launch SPA (React)
 
 ```shell
 cd spa
