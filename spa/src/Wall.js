@@ -44,16 +44,18 @@ class Wall extends React.Component {
       return <div>Loading...</div>;
     } else {
       return (
-        <table>
-          <th>Mensajes</th>
-          {messages.map(message => (
-            <tr>
-              <td key={message.id}>
-                {message.message}
-              </td>
-            </tr>
-          ))}
-        </table>
+        <div>
+          <table>
+            <th>Mensajes</th>
+            {messages.map(message => (
+              <tr>
+                <td key={message.id}>
+                  {message.message}
+                </td>
+              </tr>
+            ))}
+          </table>
+        </div>
       )
     }
   }
