@@ -21,11 +21,7 @@ function isTokenValid(req) {
   return true;
 }
 
-app.get("/testAPI", function (req, res) {
-  res.send("API is working properly")
-});
-
-app.get("/", function (req, res) {
+app.get("/", (req, res) => {
   res.json({ "message": "Index. Nothing to see here." })
 });
 
@@ -81,6 +77,28 @@ app.get("/api/messages", (req, res) => {
   });
 
 });
+
+app.post("/api/messages/new", (req, res) => {
+  if (!isTokenValid(req)) {
+    res.status(401).json({ "error": "unauthorized" });
+    return;
+  }
+  
+  try {
+    db.exec(`INSERT INTO messages(message) VALUES ('${req.body.message}')`);
+  } catch (err) {
+    if (!db.inTransaction) throw err; // (transaction was forcefully rolled back)
+    res.status(500).json({
+      "message": "Error:" + err
+    });
+    return;
+  }
+
+  res.json({
+    "message": "success"
+  });
+
+})
 
 app.listen(9000, () => {
   console.log("API server running on port 9000");

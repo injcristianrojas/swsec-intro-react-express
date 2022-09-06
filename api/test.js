@@ -6,6 +6,7 @@ let should = chai.should();
 chai.use(chaiHttp);
 
 let accessToken;
+let testPostMessage;
 
 describe("Basic tests", function () {
 
@@ -85,17 +86,27 @@ describe("Authenticated tests", function () {
       });
   });
 
-  it("GET /api/messages: Show all messages", function (done) {
+  it("POST /api/messages/new: Adding new post", function (done) {
+    testPostMessage = "test message " + (new Date()).toISOString();
+    chai.request(app)
+      .post("/api/messages/new")
+      .set({ Authorization: `Bearer ${accessToken}` })
+      .send({ message: testPostMessage })
+      .end(function (err, res) {
+        res.should.have.status(200)
+        done()
+      });
+  });
+
+  it("GET /api/messages: Check added post", function (done) {
     chai.request(app)
       .get("/api/messages")
       .set({ Authorization: `Bearer ${accessToken}` })
       .end(function (err, res) {
         res.should.have.status(200)
-        res.body.data[0].should.have.property("message").to.include("Administrador");
+        res.body.data[2].should.have.property("message").to.include(testPostMessage);
         done()
       });
   });
-
-  
 
 });
