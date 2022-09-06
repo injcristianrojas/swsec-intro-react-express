@@ -21,6 +21,12 @@ function isTokenValid(req) {
   return true;
 }
 
+function getMessages() {
+  const sql = "select * from messages";
+  let query = db.prepare(sql);
+  return query.all();
+}
+
 app.get("/", (req, res) => {
   res.json({ "message": "Index. Nothing to see here." })
 });
@@ -67,13 +73,9 @@ app.get("/api/messages", (req, res) => {
     return;
   }
 
-  const sql = "select * from messages";
-  let query = db.prepare(sql);
-  let results = query.all();
-
   res.json({
     "message": "success",
-    "data": results
+    "data": getMessages()
   });
 
 });
@@ -94,13 +96,9 @@ app.post("/api/messages/new", (req, res) => {
     return;
   }
 
-  const sql = "select * from messages";
-  let query = db.prepare(sql);
-  let results = query.all();
-
   res.json({
     "message": "success",
-    "data": results
+    "data": getMessages()
   });
 
 })
