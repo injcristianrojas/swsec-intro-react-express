@@ -1,6 +1,7 @@
 // Source: https://reactjs.org/docs/faq-ajax.html
 import React from 'react';
 import axios from 'axios';
+import { getToken } from './hooks/useAuth'
 
 class Wall extends React.Component {
 
@@ -20,7 +21,7 @@ class Wall extends React.Component {
   }
 
   handleSubmit(event) {
-    let token = localStorage.getItem('jwttoken');
+    let token = getToken();
     axios.post(
       'http://127.0.0.1:9000/api/messages/new',
       {
@@ -47,7 +48,7 @@ class Wall extends React.Component {
 
 
   componentDidMount() {
-    let token = localStorage.getItem('jwttoken');
+    let token = getToken();
     fetch('http://127.0.0.1:9000/api/messages', { method: "GET", headers: { "Authorization": `Bearer ${token}` } })
       .then(res => res.json())
       .then(

@@ -4,6 +4,7 @@ import Menu from './Menu';
 import Login from './Login';
 import Users from './Users';
 import Wall from './Wall';
+import {logout} from './hooks/useAuth'
 
 class MenuLogged extends React.Component {
 
@@ -24,7 +25,7 @@ class MenuLogged extends React.Component {
   }
  
   Exit() {
-    localStorage.removeItem('jwttoken');
+    logout();
     ReactDOM.render(<Menu />, document.getElementById('menu'));
     ReactDOM.render(<Login />, document.getElementById('root'));
   }
