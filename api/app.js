@@ -25,8 +25,7 @@ function isTokenValid(req) {
 }
 
 function getMessages() {
-  const sql = "select * from messages";
-  let query = db.prepare(sql);
+  let query = db.prepare("select * from messages");
   return query.all();
 }
 
@@ -38,8 +37,7 @@ app.post("/api/login", (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
 
-  const sql = "select * from users where username = '" + username + "' and password = '" + password + "'";
-  let query = db.prepare(sql);
+  let query = db.prepare("select * from users where username = '" + username + "' and password = '" + password + "'");
   let results = query.all();
 
   if (results.length < 1) {
@@ -57,8 +55,7 @@ app.get("/api/users/type/:type", (req, res) => {
     return;
   }
 
-  const sql = "select * from users where user_type = " + req.params.type;
-  let query = db.prepare(sql);
+  let query = db.prepare("select * from users where user_type = " + req.params.type);
   let results = query.all();
 
   res.json({
