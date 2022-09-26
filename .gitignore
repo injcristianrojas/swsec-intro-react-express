@@ -1,4 +1,5 @@
 *node_modules
 *.sqlite
 *dccache
-private_notes.md
+PRIVATE_NOTES.md
+TORPEDO.md
