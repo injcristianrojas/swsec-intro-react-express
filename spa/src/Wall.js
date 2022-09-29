@@ -88,9 +88,8 @@ class Wall extends React.Component {
             <tbody>
               {messages.map(message => (
                 <tr key={message.id}>
-                  <td>
-                    {message.message}
-                  </td>
+                  <td
+                    dangerouslySetInnerHTML={{ __html: message.message }} />
                 </tr>
               ))}
             </tbody>
