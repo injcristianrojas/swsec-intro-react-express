@@ -37,7 +37,7 @@ app.post("/api/login", (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
 
-  let query = db.prepare("select * from users where username = '" + username + "' and password = '" + password + "'");
+  let query = db.prepare("select id, username, user_type from users where username = '" + username + "' and password = '" + password + "'");
   let results = query.all();
 
   if (results.length < 1) {
@@ -55,7 +55,7 @@ app.get("/api/users/type/:type", (req, res) => {
     return;
   }
 
-  let query = db.prepare("select * from users where user_type = " + req.params.type);
+  let query = db.prepare("select username, user_type from users where user_type = " + req.params.type);
   let results = query.all();
 
   res.json({
@@ -85,7 +85,7 @@ app.post("/api/messages/new", (req, res) => {
     res.status(401).json({ "error": "unauthorized" });
     return;
   }
-  
+
   try {
     db.exec(`INSERT INTO messages(message) VALUES ('${req.body.message}')`);
   } catch (err) {

