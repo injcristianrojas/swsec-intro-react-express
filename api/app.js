@@ -13,6 +13,17 @@ app.use(cors({
   methods: '*'
 }));
 
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger.json');
+
+var options = {
+  swaggerOptions: {
+      url: "/api-docs/swagger.json",
+  },
+}
+app.get("/api-docs/swagger.json", (req, res) => res.json(swaggerDocument));
+app.use('/api-docs', swaggerUi.serveFiles(null, options), swaggerUi.setup(null, options));
+
 function isTokenValid(req) {
   if (req.headers && req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') {
     jwt.verify(req.headers.authorization.split(' ')[1], JWTSECRET, (err, decode) => {
