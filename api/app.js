@@ -1,10 +1,8 @@
 const express = require('express');
-const jwt = require('jsonwebtoken');
 const cors = require('cors');
 const {db, getMessages} = require('./helpers/db.js');
+const {isTokenValid, signToken} = require('./helpers/jwt.js');
 
-const JWTSECRET = "123";
-const JWTEXPIRATION = "1800s";
 const PORT = 9000;
 
 const app = express();
@@ -25,17 +23,6 @@ var options = {
 app.get("/api/v2/api-docs/swagger.json", (req, res) => res.json(swaggerDocument));
 app.use('/api/v2/api-docs', swaggerUi.serveFiles(null, options), swaggerUi.setup(null, options));
 
-function isTokenValid(req) {
-  if (req.headers && req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') {
-    jwt.verify(req.headers.authorization.split(' ')[1], JWTSECRET, (err, decode) => {
-      if (err) return false;
-    });
-  } else {
-    return false;
-  }
-  return true;
-}
-
 app.get("/", (req, res) => {
   res.json({ "message": "Index. Nothing to see here." })
 });
@@ -44,13 +31,13 @@ app.post("/api/v2/login", (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
 
-  let query = db.prepare("select id, username, user_type from users where username = '" + username + "' and password = '" + password + "'");
+  let query = db.prepare("select * from users where username = '" + username + "' and password = '" + password + "'");
   let results = query.all();
 
   if (results.length < 1) {
     res.status(401).json({ "error": "unauthorized" });
   } else {
-    res.json({ 'token': jwt.sign({ username: results[0].username }, JWTSECRET, { expiresIn: JWTEXPIRATION }) });
+    res.json({ 'token': signToken });
   }
 });
 
