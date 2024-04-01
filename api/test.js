@@ -17,10 +17,10 @@ describe("Basic tests", function () {
         res.should.have.status(200)
         done()
       });
-  });
-
-  it("POST /api/v2/login: Legit login should work", function (done) {
-    chai.request(app)
+    });
+    
+    it("POST /api/v2/login: Legit login should work", function (done) {
+      chai.request(app)
       .post("/api/v2/login")
       .send({ username: "admin", password: "123" })
       .end(function (err, res) {
@@ -28,32 +28,42 @@ describe("Basic tests", function () {
         res.should.have.status(200)
         done()
       });
-  });
-
-  it("PWN /api/v2/login: Aggressive SQL injection login should work", function (done) {
-    chai.request(app)
+    });
+    
+    it("PWN /api/v2/login: Aggressive SQL injection login should work", function (done) {
+      chai.request(app)
       .post("/api/v2/login")
       .send({ username: "admin", password: "' or 1=1;-- " })
       .end(function (err, res) {
         res.should.have.status(200)
         done()
       });
-  });
-
-  it("PWN /api/v2/login: Non-aggressive SQL injection login should work", function (done) {
-    chai.request(app)
+    });
+    
+    it("PWN /api/v2/login: Non-aggressive SQL injection login should work", function (done) {
+      chai.request(app)
       .post("/api/v2/login")
       .send({ username: "admin", password: "' or '1'='1" })
       .end(function (err, res) {
         res.should.have.status(200)
         done()
       });
+    });
+
+    it("PWN /api/v1/users: Show type 2 users", function (done) {
+      chai.request(app)
+        .get("/api/v1/users/type/2")
+        .end(function (err, res) {
+          res.should.have.status(200)
+          done()
+        });
+    });
+    
   });
+  
 
-});
-
-describe("Authenticated tests", function () {
-
+  describe("Authenticated tests", function () {
+    
   it("GET /api/v2/users: Show type 2 users", function (done) {
     chai.request(app)
       .get("/api/v2/users/type/2")

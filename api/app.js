@@ -1,10 +1,11 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const cors = require('cors');
-const db = require('./db.js');
+const db = require('./helpers/db.js');
 
 const JWTSECRET = "123";
 const JWTEXPIRATION = "1800s";
+const PORT = 9000;
 
 const app = express();
 app.use(express.json());
@@ -60,6 +61,18 @@ app.post("/api/v2/login", (req, res) => {
 
 // Users
 
+app.get("/api/v1/users/type/:type", (req, res) => {
+
+  let query = db.prepare("select username, password, user_type from users where user_type = " + req.params.type);
+  let results = query.all();
+
+  res.json({
+    "message": "success",
+    "data": results
+  });
+
+});
+
 app.get("/api/v2/users/type/:type", (req, res) => {
   if (!isTokenValid(req)) {
     res.status(401).json({ "error": "unauthorized" });
@@ -114,7 +127,7 @@ app.post("/api/v2/messages/new", (req, res) => {
 
 })
 
-app.listen(9000, () => {
+app.listen(PORT, () => {
   console.log("API server running on port 9000");
 });
 
