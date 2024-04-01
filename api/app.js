@@ -17,11 +17,11 @@ const swaggerDocument = require('./swagger.json');
 
 var options = {
   swaggerOptions: {
-      url: "/api/v2/api-docs/swagger.json",
+      url: "/api-docs/swagger.json",
   },
 }
-app.get("/api/v2/api-docs/swagger.json", (req, res) => res.json(swaggerDocument));
-app.use('/api/v2/api-docs', swaggerUi.serveFiles(null, options), swaggerUi.setup(null, options));
+app.get("/api-docs/swagger.json", (req, res) => res.json(swaggerDocument));
+app.use('/api-docs', swaggerUi.serveFiles(null, options), swaggerUi.setup(null, options));
 
 app.get("/", (req, res) => {
   res.json({ "message": "Index. Nothing to see here." })
