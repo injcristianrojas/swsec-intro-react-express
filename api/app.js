@@ -37,7 +37,7 @@ app.post("/api/v2/login", (req, res) => {
   if (results.length < 1) {
     res.status(401).json({ "error": "unauthorized" });
   } else {
-    res.json({ 'token': signToken });
+    res.json({ 'token': signToken(username) });
   }
 });
 

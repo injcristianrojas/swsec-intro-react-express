@@ -15,7 +15,7 @@ function isTokenValid(req) {
 }
 
 function signToken(username) {
-  jwt.sign({ username: username }, JWTSECRET, { expiresIn: JWTEXPIRATION })
+  return jwt.sign({ username: username }, JWTSECRET, { expiresIn: JWTEXPIRATION })
 }
 
 module.exports = {
