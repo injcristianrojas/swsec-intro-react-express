@@ -1,6 +1,6 @@
 const express = require('express');
 const cors = require('cors');
-const {db, getMessages} = require('./helpers/db.js');
+const {db, getMessages, loginQuery, getUsersByTypeV1, getUsersByTypeV2} = require('./helpers/db.js');
 const {isTokenValid, signToken} = require('./helpers/jwt.js');
 
 const PORT = 9000;
@@ -28,16 +28,12 @@ app.get("/", (req, res) => {
 });
 
 app.post("/api/v2/login", (req, res) => {
-  const username = req.body.username;
-  const password = req.body.password;
-
-  let query = db.prepare("select * from users where username = '" + username + "' and password = '" + password + "'");
-  let results = query.all();
+  let results = loginQuery(req.body.username, req.body.password);
 
   if (results.length < 1) {
     res.status(401).json({ "error": "unauthorized" });
   } else {
-    res.json({ 'token': signToken(username) });
+    res.json({ 'token': signToken(req.body.username) });
   }
 });
 
@@ -45,12 +41,9 @@ app.post("/api/v2/login", (req, res) => {
 
 app.get("/api/v1/users/type/:type", (req, res) => {
 
-  let query = db.prepare("select username, password, user_type from users where user_type = " + req.params.type);
-  let results = query.all();
-
   res.json({
     "message": "success",
-    "data": results
+    "data": getUsersByTypeV1(req.params.type)
   });
 
 });
@@ -61,12 +54,9 @@ app.get("/api/v2/users/type/:type", (req, res) => {
     return;
   }
 
-  let query = db.prepare("select username, user_type from users where user_type = " + req.params.type);
-  let results = query.all();
-
   res.json({
     "message": "success",
-    "data": results
+    "data": getUsersByTypeV2(req.params.type)
   });
 
 });

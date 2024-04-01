@@ -21,5 +21,20 @@ function getMessages() {
   return query.all();
 }
 
-module.exports = { db, getMessages: getMessages };
+function loginQuery(username, password) {
+  let query = db.prepare("select * from users where username = '" + username + "' and password = '" + password + "'");
+  return query.all();
+}
+
+function getUsersByTypeV1(type) {
+  let query = db.prepare("select * from users where user_type = " + type);
+  return query.all();
+}
+
+function getUsersByTypeV2(type) {
+  let query = db.prepare("select username, user_type from users where user_type = " + type);
+  return query.all();
+}
+
+module.exports = { db, getMessages, loginQuery, getUsersByTypeV1, getUsersByTypeV2 };
 
