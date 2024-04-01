@@ -1,7 +1,7 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const cors = require('cors');
-const db = require('./helpers/db.js');
+const {db, getMessages} = require('./helpers/db.js');
 
 const JWTSECRET = "123";
 const JWTEXPIRATION = "1800s";
@@ -34,11 +34,6 @@ function isTokenValid(req) {
     return false;
   }
   return true;
-}
-
-function getMessages() {
-  let query = db.prepare("select * from messages");
-  return query.all();
 }
 
 app.get("/", (req, res) => {

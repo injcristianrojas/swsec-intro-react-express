@@ -1,7 +1,5 @@
 const Database = require("better-sqlite3");
-
 const DBSOURCE = "db.sqlite";
-
 const db = new Database(DBSOURCE);
 
 db.exec("DROP TABLE IF EXISTS messages");
@@ -17,4 +15,11 @@ db.exec("INSERT INTO users(username,password,user_type) VALUES ('admin', '123', 
 db.exec("INSERT INTO users(username,password,user_type) VALUES ('zorzal', 'fio', 2)");
 db.exec("INSERT INTO users(username,password,user_type) VALUES ('chincol', 'fiofio', 2)");
 
-module.exports = db;
+
+function getMessages() {
+  let query = db.prepare("select * from messages");
+  return query.all();
+}
+
+module.exports = { db, getMessages: getMessages };
+
