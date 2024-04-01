@@ -15,7 +15,7 @@ class Users extends React.Component {
 
   componentDidMount() {
     let token = getToken();
-    fetch('http://127.0.0.1:9000/api/users/type/2', { method: "GET", headers: { "Authorization": `Bearer ${token}` } })
+    fetch('http://127.0.0.1:9000/api/v2/users/type/2', { method: "GET", headers: { "Authorization": `Bearer ${token}` } })
       .then(res => res.json())
       .then(
         (result) => {

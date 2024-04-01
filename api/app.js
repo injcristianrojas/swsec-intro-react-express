@@ -44,7 +44,7 @@ app.get("/", (req, res) => {
   res.json({ "message": "Index. Nothing to see here." })
 });
 
-app.post("/api/login", (req, res) => {
+app.post("/api/v2/login", (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
 
@@ -60,7 +60,7 @@ app.post("/api/login", (req, res) => {
 
 // Users
 
-app.get("/api/users/type/:type", (req, res) => {
+app.get("/api/v2/users/type/:type", (req, res) => {
   if (!isTokenValid(req)) {
     res.status(401).json({ "error": "unauthorized" });
     return;
@@ -78,7 +78,7 @@ app.get("/api/users/type/:type", (req, res) => {
 
 // Posts
 
-app.get("/api/messages", (req, res) => {
+app.get("/api/v2/messages", (req, res) => {
   if (!isTokenValid(req)) {
     res.status(401).json({ "error": "unauthorized" });
     return;
@@ -91,7 +91,7 @@ app.get("/api/messages", (req, res) => {
 
 });
 
-app.post("/api/messages/new", (req, res) => {
+app.post("/api/v2/messages/new", (req, res) => {
   if (!isTokenValid(req)) {
     res.status(401).json({ "error": "unauthorized" });
     return;

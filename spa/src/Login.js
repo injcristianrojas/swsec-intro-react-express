@@ -26,7 +26,7 @@ class Login extends React.Component {
 
   handleSubmit(event) {
     axios.post(
-      'http://127.0.0.1:9000/api/login/',
+      'http://127.0.0.1:9000/api/v2/login/',
       {
         username: this.state.username,
         password: this.state.password,

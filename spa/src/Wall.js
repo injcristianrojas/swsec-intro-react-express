@@ -23,7 +23,7 @@ class Wall extends React.Component {
   handleSubmit(event) {
     let token = getToken();
     axios.post(
-      'http://127.0.0.1:9000/api/messages/new',
+      'http://127.0.0.1:9000/api/v2/messages/new',
       {
         'message': this.state.message
       },
@@ -49,7 +49,7 @@ class Wall extends React.Component {
 
   componentDidMount() {
     let token = getToken();
-    fetch('http://127.0.0.1:9000/api/messages', { method: "GET", headers: { "Authorization": `Bearer ${token}` } })
+    fetch('http://127.0.0.1:9000/api/v2/messages', { method: "GET", headers: { "Authorization": `Bearer ${token}` } })
       .then(res => res.json())
       .then(
         (result) => {
