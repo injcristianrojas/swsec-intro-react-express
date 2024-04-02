@@ -13,7 +13,7 @@ describe("Basic tests", function () {
   it("GET /: Should have status code 200", function (done) {
     chai.request(app)
       .get("/")
-      .end(function (err, res) {
+      .end(function (_, res) {
         res.should.have.status(200)
         done()
       });
@@ -23,7 +23,7 @@ describe("Basic tests", function () {
     chai.request(app)
       .post("/api/v2/login")
       .send({ username: "admin", password: "123" })
-      .end(function (err, res) {
+      .end(function (_, res) {
         accessToken = res.body.token
         res.should.have.status(200)
         done()
@@ -34,7 +34,7 @@ describe("Basic tests", function () {
     chai.request(app)
       .post("/api/v2/login")
       .send({ username: "admin", password: "' or 1=1;-- " })
-      .end(function (err, res) {
+      .end(function (_, res) {
         res.should.have.status(200)
         done()
       });
@@ -44,7 +44,7 @@ describe("Basic tests", function () {
     chai.request(app)
       .post("/api/v2/login")
       .send({ username: "admin", password: "' or '1'='1" })
-      .end(function (err, res) {
+      .end(function (_, res) {
         res.should.have.status(200)
         done()
       });
@@ -53,7 +53,7 @@ describe("Basic tests", function () {
   it("PWN /api/v1/users: Show type 2 users", function (done) {
     chai.request(app)
       .get("/api/v1/users/type/2")
-      .end(function (err, res) {
+      .end(function (_, res) {
         res.should.have.status(200)
         done()
       });
@@ -68,7 +68,7 @@ describe("Authenticated tests", function () {
     chai.request(app)
       .get("/api/v2/users/type/2")
       .set({ Authorization: `Bearer ${accessToken}` })
-      .end(function (err, res) {
+      .end(function (_, res) {
         res.should.have.status(200)
         done()
       });
@@ -78,7 +78,7 @@ describe("Authenticated tests", function () {
     chai.request(app)
       .get("/api/v2/users/type/2 or 1=1")
       .set({ Authorization: `Bearer ${accessToken}` })
-      .end(function (err, res) {
+      .end(function (_, res) {
         res.should.have.status(200)
         res.body.data.should.have.length(3)
         done()
@@ -89,7 +89,7 @@ describe("Authenticated tests", function () {
     chai.request(app)
       .get("/api/v2/users/type/2 UNION SELECT username || '-' || password, username FROM users")
       .set({ Authorization: `Bearer ${accessToken}` })
-      .end(function (err, res) {
+      .end(function (_, res) {
         res.should.have.status(200)
         res.body.data[0].should.have.property("username").to.include("admin-123");
         done()
@@ -102,7 +102,7 @@ describe("Authenticated tests", function () {
       .post("/api/v2/messages/new")
       .set({ Authorization: `Bearer ${accessToken}` })
       .send({ message: testPostMessage })
-      .end(function (err, res) {
+      .end(function (_, res) {
         res.should.have.status(200)
         done()
       });
@@ -112,7 +112,7 @@ describe("Authenticated tests", function () {
     chai.request(app)
       .get("/api/v2/messages")
       .set({ Authorization: `Bearer ${accessToken}` })
-      .end(function (err, res) {
+      .end(function (_, res) {
         res.should.have.status(200)
         res.body.data[2].should.have.property("message").to.include(testPostMessage);
         done()
