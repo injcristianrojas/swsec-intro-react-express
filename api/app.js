@@ -19,10 +19,10 @@ var options = {
       url: "/api-docs/swagger.json",
   },
 }
-app.get("/api-docs/swagger.json", (req, res) => res.json(swaggerDocument));
+app.get("/api-docs/swagger.json", (_, res) => res.json(swaggerDocument));
 app.use('/api-docs', swaggerUi.serveFiles(null, options), swaggerUi.setup(null, options));
 
-app.get("/", (req, res) => {
+app.get("/", (_, res) => {
   res.json({ "message": "Index. Nothing to see here." })
 });
 
