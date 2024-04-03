@@ -59,6 +59,15 @@ describe("Basic tests", function () {
       });
   });
 
+  it("GET /api/v1/weather: Should get weather", function (done) {
+    chai.request(app)
+      .get("/api/v1/weather/Valparaiso,Chile")
+      .end(function (_, res) {
+        res.should.have.status(200)
+        done()
+      });
+  });
+
 });
 
 
